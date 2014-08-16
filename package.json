@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/omkelderman/osu-node-api/issues"
   },
-  "homepage": "https://github.com/omkelderman/osu-node-api"
+  "homepage": "https://github.com/omkelderman/osu-node-api",
+  "dependencies": {
+    "request": "^2.40.0"
+  }
 }
