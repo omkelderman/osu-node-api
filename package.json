@@ -1,0 +1,23 @@
+{
+  "name": "osu-api",
+  "version": "0.0.1",
+  "description": "An node-wrapper around the osu-api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omkelderman/osu-node-api.git"
+  },
+  "keywords": [
+    "osu",
+    "api"
+  ],
+  "author": "Olle Kelderman <omkelderman@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/omkelderman/osu-node-api/issues"
+  },
+  "homepage": "https://github.com/omkelderman/osu-node-api"
+}
