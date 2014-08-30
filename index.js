@@ -2,6 +2,16 @@ var request = require('request');
 
 exports.Api = OsuApi;
 
+function buildOnlyFirstCallback(originalCallback) {
+    return (function (err, obj){
+        if(err) {
+            originalCallback(err, null);
+        } else {
+            originalCallback(null, obj[0]);
+        }
+    });
+}
+
 function OsuApi(apiKey) {
     this.apiKey = apiKey;
 }
@@ -37,13 +47,7 @@ OsuApi.prototype.callApi = (function(endpoint, params, callback) {
 });
 
 OsuApi.prototype.getBeatmap = (function(id, callback) {
-    this.callApi('get_beatmaps', {b: id}, function(err, obj) {
-        if(err) {
-            callback(err, null);
-        } else {
-            callback(null, obj[0]);
-        }
-    });
+    this.callApi('get_beatmaps', {b: id}, buildOnlyFirstCallback(callback));
 });
 
 OsuApi.prototype.getBeatmapSet = (function(id, callback) {
@@ -70,13 +74,7 @@ OsuApi.prototype.getUser = (function(user, eventDays, callback) {
         params.event_days = eventDays;
     }
 
-    this.callApi('get_user', params, function(err, obj) {
-        if(err) {
-            callback(err, null);
-        } else {
-            callback(null, obj[0]);
-        }
-    });
+    this.callApi('get_user', params, buildOnlyFirstCallback(callback));
 });
 
 OsuApi.prototype.getScore = (function(beatmapId, userId, callback) {
@@ -91,11 +89,5 @@ OsuApi.prototype.getScore = (function(beatmapId, userId, callback) {
 });
 
 OsuApi.prototype.getUserScore = (function(beatmapId, userId, callback) {
-    this.getScore(beatmapId, userId, function(err, obj) {
-        if(err) {
-            callback(err, null);
-        } else {
-            callback(null, obj[0]);
-        }
-    });
+    this.getScore(beatmapId, userId, buildOnlyFirstCallback(callback));
 });
