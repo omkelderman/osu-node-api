@@ -6,11 +6,11 @@ function OsuApi(apiKey) {
     this.apiKey = apiKey;
 }
 
-OsuApi.prototype.callApi = (function(endpoint, obj, callback) {
-    obj.k = this.apiKey;
+OsuApi.prototype.callApi = (function(endpoint, params, callback) {
+    params.k = this.apiKey;
     request.get({
         url: 'https://osu.ppy.sh/api/'+endpoint,
-        qs: obj
+        qs: params
     }, function(error, response, body) {
         if(error) {
             callback(error, null);
