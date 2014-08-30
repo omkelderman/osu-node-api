@@ -53,3 +53,49 @@ OsuApi.prototype.getBeatmapSet = (function(id, callback) {
 OsuApi.prototype.getBeatmapsByUser = (function(id, callback) {
     this.callApi('get_beatmaps', {u: id}, callback);
 });
+
+OsuApi.prototype.getUser = (function(user, eventDays, callback) {
+    var params = {u: user};
+    switch(typeof user) {
+        case 'string':
+            params.type = 'string';
+            break;
+        case 'number':
+            params.type = 'id';
+            break;
+    }
+    if(typeof eventDays == 'function') {
+        callback = eventDays;
+    } else if(eventDays) {
+        params.event_days = eventDays;
+    }
+
+    this.callApi('get_user', params, function(err, obj) {
+        if(err) {
+            callback(err, null);
+        } else {
+            callback(null, obj[0]);
+        }
+    });
+});
+
+OsuApi.prototype.getScore = (function(beatmapId, userId, callback) {
+    var params = {b: beatmapId};
+    if(typeof userId == 'function') {
+        callback = userId;
+    } else if(userId) {
+        params.u = userId;
+    }
+
+    this.callApi('get_scores', params, callback);
+});
+
+OsuApi.prototype.getUserScore = (function(beatmapId, userId, callback) {
+    this.getScore(beatmapId, userId, function(err, obj) {
+        if(err) {
+            callback(err, null);
+        } else {
+            callback(null, obj[0]);
+        }
+    });
+});
