@@ -10,7 +10,8 @@ OsuApi.prototype.callApi = (function(endpoint, params, callback) {
     params.k = this.apiKey;
     request.get({
         url: 'https://osu.ppy.sh/api/'+endpoint,
-        qs: params
+        qs: params,
+        followRedirect: false
     }, function(error, response, body) {
         if(error) {
             callback(error, null);
@@ -21,7 +22,11 @@ OsuApi.prototype.callApi = (function(endpoint, params, callback) {
                 try {
                     obj = JSON.parse(body);
                 } catch(e) {
-                    err = new Error("Could not parse json");
+                    if(body == 'Please provide a valid API key.') {
+                        err = new Error("Invalid API key");
+                    } else {
+                        err = new Error("Could not parse json");
+                    }
                 }
             } else {
                 err = new Error("Bad http-response");
