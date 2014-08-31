@@ -2,6 +2,15 @@ var request = require('request');
 
 exports.Api = OsuApi;
 
+var Modes = {
+    osu: 0,
+    taiko: 1,
+    CtB: 2,
+    osumania: 3
+};
+
+exports.Modes = Modes;
+
 function buildOnlyFirstCallback(originalCallback) {
     return (function (err, obj){
         if(err) {
@@ -14,7 +23,12 @@ function buildOnlyFirstCallback(originalCallback) {
 
 function OsuApi(apiKey) {
     this.apiKey = apiKey;
+    this.mode = Modes.osu;
 }
+
+OsuApi.prototype.setMode = (function(mode) {
+   this.mode = mode; 
+});
 
 OsuApi.prototype.callApi = (function(endpoint, params, callback) {
     params.k = this.apiKey;
@@ -46,6 +60,10 @@ OsuApi.prototype.callApi = (function(endpoint, params, callback) {
     });
 });
 
+OsuApi.prototype.getBeatmapsRaw = (function(obj, callback) {
+    this.callApi('get_beatmaps', obj, callback);
+});
+
 OsuApi.prototype.getBeatmap = (function(id, callback) {
     this.callApi('get_beatmaps', {b: id}, buildOnlyFirstCallback(callback));
 });
@@ -58,8 +76,12 @@ OsuApi.prototype.getBeatmapsByUser = (function(id, callback) {
     this.callApi('get_beatmaps', {u: id}, callback);
 });
 
+OsuApi.prototype.getUserRaw = (function(obj, callback) {
+    this.callApi('get_user', obj, callback);
+});
+
 OsuApi.prototype.getUser = (function(user, eventDays, callback) {
-    var params = {u: user};
+    var params = {u: user, m: this.mode};
     switch(typeof user) {
         case 'string':
             params.type = 'string';
@@ -77,8 +99,12 @@ OsuApi.prototype.getUser = (function(user, eventDays, callback) {
     this.callApi('get_user', params, buildOnlyFirstCallback(callback));
 });
 
-OsuApi.prototype.getScore = (function(beatmapId, userId, callback) {
-    var params = {b: beatmapId};
+OsuApi.prototype.getScoresRaw = (function(obj, callback) {
+    this.callApi('get_scores', obj, callback);
+});
+
+OsuApi.prototype.getScores = (function(beatmapId, userId, callback) {
+    var params = {b: beatmapId, m: this.mode};
     if(typeof userId == 'function') {
         callback = userId;
     } else if(userId) {
@@ -89,5 +115,47 @@ OsuApi.prototype.getScore = (function(beatmapId, userId, callback) {
 });
 
 OsuApi.prototype.getUserScore = (function(beatmapId, userId, callback) {
-    this.getScore(beatmapId, userId, buildOnlyFirstCallback(callback));
+    this.getScores(beatmapId, userId, buildOnlyFirstCallback(callback));
+});
+
+OsuApi.prototype.getUserBestRaw = (function(obj, callback) {
+    this.callApi('get_user_best', obj, callback);
+});
+
+OsuApi.prototype.getUserBest = (function(id, callback) {
+    var params = {u: id, m: this.mode};
+    switch(typeof user) {
+        case 'string':
+            params.type = 'string';
+            break;
+        case 'number':
+            params.type = 'id';
+            break;
+    }
+    this.callApi('get_user_best', params, callback);
+});
+
+OsuApi.prototype.getUserRecentRaw = (function(obj, callback) {
+    this.callApi('get_user_recent', obj, callback);
+});
+
+OsuApi.prototype.getUserRecent = (function(id, callback) {
+    var params = {u: id, m: this.mode};
+    switch(typeof user) {
+        case 'string':
+            params.type = 'string';
+            break;
+        case 'number':
+            params.type = 'id';
+            break;
+    }
+    this.callApi('get_user_recent', params, callback);
+});
+
+OsuApi.prototype.getMatchRaw = (function(obj, callback) {
+    this.callApi('get_match', obj, callback);
+});
+
+OsuApi.prototype.getMatch = (function(id, callback) {
+    this.callApi('get_match', {mp: id}, callback);
 });
