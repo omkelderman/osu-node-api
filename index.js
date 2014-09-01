@@ -21,9 +21,9 @@ function buildOnlyFirstCallback(originalCallback) {
     });
 }
 
-function OsuApi(apiKey) {
+function OsuApi(apiKey, mode) {
     this.apiKey = apiKey;
-    this.mode = Modes.osu;
+    this.mode = mode || Modes.osu;
 }
 
 OsuApi.prototype.setMode = (function(mode) {

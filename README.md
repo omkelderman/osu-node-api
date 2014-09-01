@@ -20,15 +20,18 @@ The format of the returned objects can be seen in the official [osu!api document
   var taiko = osuapi.Modes.taiko;
   ```
 
-### Class ```osuapi.Api(apiKey)``` ###
+### Class ```osuapi.Api(apiKey, [mode])``` ###
 
 > Constructor function for the osu! api.
+
+> If mode is not provided, it defaults to `Modes.osu`.
 
 > Example use:
 
 > ```js
   var osuapi = require('osu-api');
   var osu = new osuapi.Api('<api key here>');
+  var osu_mania = new osuapi.Api('<api key here>', osuapi.Modes.osumania);
   ```
 
 #### Method ```osu.setMode(mode)``` ####
