@@ -65,15 +65,15 @@ OsuApi.prototype.getBeatmapsRaw = (function(obj, callback) {
 });
 
 OsuApi.prototype.getBeatmap = (function(id, callback) {
-    this.callApi('get_beatmaps', {b: id}, buildOnlyFirstCallback(callback));
+    this.getBeatmapsRaw({b: id}, buildOnlyFirstCallback(callback));
 });
 
 OsuApi.prototype.getBeatmapSet = (function(id, callback) {
-    this.callApi('get_beatmaps', {s: id}, callback);
+    this.getBeatmapsRaw({s: id}, callback);
 });
 
 OsuApi.prototype.getBeatmapsByUser = (function(id, callback) {
-    this.callApi('get_beatmaps', {u: id}, callback);
+    this.getBeatmapsRaw({u: id}, callback);
 });
 
 OsuApi.prototype.getUserRaw = (function(obj, callback) {
@@ -96,7 +96,7 @@ OsuApi.prototype.getUser = (function(user, eventDays, callback) {
         params.event_days = eventDays;
     }
 
-    this.callApi('get_user', params, buildOnlyFirstCallback(callback));
+    this.getUserRaw(params, buildOnlyFirstCallback(callback));
 });
 
 OsuApi.prototype.getScoresRaw = (function(obj, callback) {
@@ -111,7 +111,7 @@ OsuApi.prototype.getScores = (function(beatmapId, userId, callback) {
         params.u = userId;
     }
 
-    this.callApi('get_scores', params, callback);
+    this.getScoresRaw(params, callback);
 });
 
 OsuApi.prototype.getUserScore = (function(beatmapId, userId, callback) {
@@ -132,7 +132,7 @@ OsuApi.prototype.getUserBest = (function(id, callback) {
             params.type = 'id';
             break;
     }
-    this.callApi('get_user_best', params, callback);
+    this.getUserBestRaw(params, callback);
 });
 
 OsuApi.prototype.getUserRecentRaw = (function(obj, callback) {
@@ -149,7 +149,7 @@ OsuApi.prototype.getUserRecent = (function(id, callback) {
             params.type = 'id';
             break;
     }
-    this.callApi('get_user_recent', params, callback);
+    this.getUserRecentRaw(params, callback);
 });
 
 OsuApi.prototype.getMatchRaw = (function(obj, callback) {
@@ -157,5 +157,13 @@ OsuApi.prototype.getMatchRaw = (function(obj, callback) {
 });
 
 OsuApi.prototype.getMatch = (function(id, callback) {
-    this.callApi('get_match', {mp: id}, callback);
+    this.getMatchRaw({mp: id}, function(err, obj) {
+        if(err) {
+            callback(err);
+        } else if(!obj.match) {
+            callback(null);
+        } else {
+            callback(null, obj);
+        }
+    });
 });
