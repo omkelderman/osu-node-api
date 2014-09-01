@@ -95,7 +95,7 @@ The format of the returned objects can be seen in the official [osu!api document
 
 > Gets the user with the specified id or name (automatic detection).
 
-> Please note that the automatic detection uses `typeof`, so `getUser(12345, ...)` gets the user with user**Id** `12345`, while `getUser('12345', ...)` gets the user with user**name** `12345`!
+> Please note that the automatic detection uses `typeof`, so `getUser(12345, ...)` gets the user with user-**Id** `12345`, while `getUser('12345', ...)` gets the user with user-**name** `12345`!
 
 > If eventDays is provided, the event-array will contain events between now and that many days ago, defaults to 1, max. 31.
 
