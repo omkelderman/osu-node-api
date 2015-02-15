@@ -1,6 +1,8 @@
 osu-node-api
 ============
 
+[![Join the chat at https://gitter.im/omkelderman/osu-node-api](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/omkelderman/osu-node-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A node-wrapper around the osu! api
 
 The format of the returned objects can be seen in the official [osu!api documentation](https://github.com/peppy/osu-api/wiki)
