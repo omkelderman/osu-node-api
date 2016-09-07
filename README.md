@@ -1,7 +1,7 @@
 osu-node-api
 ============
 
-[![Join the chat at https://gitter.im/omkelderman/osu-node-api](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/omkelderman/osu-node-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+__*DISCONTINUED: Use something else, like https://github.com/nicholastay/nodesu!*__
 
 A node-wrapper around the osu! api
 
